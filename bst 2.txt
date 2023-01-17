@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+  int data;
+  struct node *left;
+  struct node *right;
+};
+struct node *insert(struct node *root,int data)
+{
+
+   struct node *temp = (struct node *)malloc(sizeof(struct node));
+   temp->data = data;
+   temp->left = NULL;
+   temp->right= NULL;
+   if(root==NULL)
+   {
+      root = temp;
+      return root;
+   }
+   if(root->data<=data)
+   root->right = insert(root->right,data);
+   else
+   root->left  = insert(root->left,data);
+
+   return root;
+}
+int check =-1;
+void binarysearch(struct node *root,int ele)
+{
+   if(root==NULL)
+    return;
+   if(root->data==ele)
+   {
+     check = 1;
+     return;
+   }
+   else if(root->data<ele)
+   binarysearch(root->right,ele);
+   else
+   binarysearch(root->left,ele);
+   return;
+}
+int main()
+{
+   int n;
+   printf("Enter number of nodes :\n");
+   scanf("%d",&n);
+    struct node *root= NULL,*head;
+   int arr[100];
+   int i;
+   for(i=0;i<n;i++)
+    {
+       printf("Enter the value of node : %d\n",i+1);
+       scanf("%d",&arr[i]);
+    }
+    for(i=0;i<n;i++)
+    root = insert(root,arr[i]);
+    int ele;
+    printf("Enter element to be searched :\n");
+    scanf("%d",&ele);
+    binarysearch(root,ele);
+    if(check==1)
+    printf("Element found\n");
+    else
+    printf("Element not found\n");
+   return 0;
+}

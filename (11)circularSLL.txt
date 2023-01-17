@@ -1,0 +1,220 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+    int data;
+    struct node *link;
+};
+
+struct node *tail = NULL;
+int count = 0;
+
+struct node *create()
+{
+    struct node *snode;
+    snode = (struct node *)malloc(sizeof(struct node));
+
+    if (snode == NULL)
+    {
+        printf("\nMemory is not available");
+        exit(1);
+    }
+    printf("Enter the data\n");
+    scanf("%d", &snode->data);
+    snode->link = snode;
+    count++;
+    return snode;
+}
+
+struct node *insertfront()
+{
+    struct node *temp;
+    temp = create();
+    if (tail == NULL)
+    {
+        return temp;
+    }
+    temp->link = tail->link;
+    tail->link = temp;
+    return tail;
+}
+struct node *deletefront()
+{
+    struct node *temp;
+    if (tail == NULL)
+    {
+        printf("Linked list is empty\n");
+        return tail;
+    }
+    if (tail->link == tail)
+    {
+        printf("Front(first) node is deleted\n");
+        count--;
+        free(tail);
+        tail = NULL;
+        return tail;
+    }
+    temp = tail->link;
+    tail->link = temp->link;
+    printf("Front(first) node is deleted");
+    count--;
+    free(temp);
+    return tail;
+}
+
+struct node *insertend()
+{
+    struct node *temp;
+    temp = create();
+    if (tail == NULL)
+    {
+        return temp;
+    }
+    temp->link = tail->link;
+    tail->link = temp;
+    tail = tail->link;
+    return (tail);
+}
+struct node *deleteend()
+{
+    if (tail == NULL)
+    {
+        printf("Linked List is empty\n");
+        return tail;
+    }
+    struct node *temp = tail->link;
+    if (tail->link == tail)
+    {
+        printf("Last (end) node is deleted\n");
+        free(tail);
+        count--;
+        return NULL;
+    }
+    while (temp->link != tail)
+    {
+        temp = temp->link;
+    }
+    temp->link = tail->link;
+    printf("Last (end) node is deleted\n");
+    free(tail);
+    count--;
+    tail = temp;
+    return tail;
+}
+void display()
+{
+    struct node *cur = tail->link;
+    if (tail == NULL)
+    {
+
+        printf("\nNo Contents to display in SLL \n");
+        return;
+    }
+    printf("User data-\n");
+    do
+    {
+        printf("%d ", cur->data);
+        cur = cur->link;
+    } while (cur != tail->link);
+    printf("\nThe no.of nodes in list is %d", count);
+}
+
+void INSERT()
+{
+    int ch;
+    while (1)
+    {
+        printf("\n1.Insert at Front(First)");
+        printf("\n2.Insert at End(Rear/Last)");
+        printf("\n3.Exit\n");
+        printf("\nEnter your choice");
+        scanf("%d", &ch);
+
+        switch (ch)
+        {
+        case 1:
+            tail = insertfront();
+            display();
+            break;
+        case 2:
+            tail = insertend();
+            display();
+            break;
+        case 3:
+            printf("exit");
+            return;
+            break;
+        default:
+            return;
+        }
+    }
+}
+void DELETE()
+{
+    int ch;
+    while (1)
+    {
+        printf("\n1.Delete from Front(First)");
+        printf("\n2.Delete from End(Rear/last)");
+        printf("\n3.Exit\n");
+        printf("\nEnter your choice");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            tail = deletefront();
+            display();
+            break;
+        case 2:
+            tail = deleteend();
+            display();
+            break;
+        case 3:
+            printf("Exit");
+            return;
+            break;
+        default:
+            return;
+        }
+    }
+}
+
+int main()
+{
+    int ch, i, n;
+    printf("\nSingle Circular Linked List\n");
+    while (1)
+    {
+        printf("\n1 Create\n");
+        printf("2 Display\n");
+        printf("3 Insert\n");
+        printf("4 Delete\n");
+        printf("5 Exit\n");
+        printf("Enter your choice\n");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            printf("\nHow many data you want to create\n");
+            scanf("%d", &n);
+            for (i = 1; i <= n; i++)
+                tail = insertend();
+            break;
+        case 2:
+            display();
+            break;
+        case 3:
+            INSERT();
+            break;
+        case 4:
+            DELETE();
+            break;
+        case 5:
+            printf("exit");
+            exit(0);
+            break;
+        default:
+            printf("\nPlease enter the valid choice");
+        }
+    }
+}

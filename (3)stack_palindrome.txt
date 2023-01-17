@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<string.h>
+#define MAXSIZE 20
+struct stack_palindrome
+{
+    char stack[MAXSIZE];
+    int top;
+}s;
+
+void push(char arg)
+{
+    s.top++;
+    s.stack[s.top]=arg;
+}
+char pop()
+{
+    char c;
+    c=s.stack[s.top];
+    s.top--;
+    return c;
+}
+int main()
+{
+    char string[MAXSIZE];
+    int i,len,count=0;
+    printf("Enter the string : \n");
+    scanf("%s",string);
+    len = strlen(string);
+    for(i = 0;i < len;i++)
+    push(string[i]);
+    for(i = 0;i <len;i++)
+    {
+        if(string[i] == pop())
+          count++;  
+    }
+    if(len == count)
+      printf("Given string is palindrome!!");
+    else
+      printf("Given string is not a palindrome!!");
+    return 0;  
+}

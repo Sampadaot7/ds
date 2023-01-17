@@ -1,0 +1,25 @@
+#include<stdio.h>
+int main()
+{
+    int a[10],count,i,*ptr1,*ptr2;
+    printf("Enter the size of the array : ");
+    scanf("%d",&count);
+    printf("Enter the elements : \n");
+    for (i = 0; i < count; i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    ptr1=a;
+    printf("Elements in order using pointer->\n");
+    for (i = 0; i < count; i++)
+    {
+        printf("Element %d : %d\n",(i+1),*(ptr1++));
+    }
+    ptr2=&a[count-1];
+    printf("Elements in reverse order using pointer->\n");
+    for (i = 0; i < count; i++)
+    {
+        printf("Element %d : %d\n",(i+1),*(ptr2--));
+    }
+    return 0;
+}
